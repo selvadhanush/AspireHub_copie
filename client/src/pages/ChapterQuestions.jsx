@@ -1,52 +1,35 @@
-// src/pages/ChapterQuestions.jsx
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
-
-const sampleQuestions = {
-  'kinematics': [
-    {
-      question: 'What is the SI unit of velocity?',
-      options: ['m', 'm/s', 'km/h', 's'],
-      correctAnswer: 'm/s',
-    },
-    {
-      question: 'Which of the following is a vector quantity?',
-      options: ['Speed', 'Distance', 'Displacement', 'Time'],
-      correctAnswer: 'Displacement',
-    },
-  ],
-};
+import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { questions } from "../data/questions";
 
 export default function ChapterQuestions() {
-  const { chapter } = useParams();
-  const questions = sampleQuestions[chapter] || [];
+  const { subject, chapter } = useParams();
 
+  const questionsList = questions[subject]?.[chapter] || [];
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
   const handleOptionChange = (index, option) => {
-    setSelectedAnswers((prev) => ({
-      ...prev,
-      [index]: option,
-    }));
+    setSelectedAnswers((prev) => ({ ...prev, [index]: option }));
   };
 
   const handleSubmit = () => setSubmitted(true);
 
-  // Result calculation
-  const totalQuestions = questions.length;
-  const correctAnswers = questions.filter((q, index) => selectedAnswers[index] === q.correctAnswer).length;
+  const totalQuestions = questionsList.length;
+  const correctAnswers = questionsList.filter(
+    (q, index) => selectedAnswers[index] === q.correctAnswer
+  ).length;
   const wrongAnswers = totalQuestions - correctAnswers;
   const scorePercent = Math.round((correctAnswers / totalQuestions) * 100);
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <h1 className="text-2xl font-bold mb-4 capitalize">
-        {chapter.replace(/-/g, ' ')} - Mock Test
+        {subject} - {chapter.replace(/-/g, " ")} - Mock Test
       </h1>
 
       <div className="space-y-6">
-        {questions.map((q, index) => (
+        {questionsList.map((q, index) => (
           <div key={index} className="bg-white p-4 rounded-lg shadow">
             <h2 className="font-semibold mb-2">
               {index + 1}. {q.question}
@@ -72,12 +55,12 @@ export default function ChapterQuestions() {
               <p
                 className={`mt-2 text-sm ${
                   selectedAnswers[index] === q.correctAnswer
-                    ? 'text-green-600'
-                    : 'text-red-600'
+                    ? "text-green-600"
+                    : "text-red-600"
                 }`}
               >
                 {selectedAnswers[index] === q.correctAnswer
-                  ? '✅ Correct'
+                  ? "✅ Correct"
                   : `❌ Wrong. Correct answer: ${q.correctAnswer}`}
               </p>
             )}
@@ -94,7 +77,9 @@ export default function ChapterQuestions() {
         </button>
       ) : (
         <div className="mt-8 bg-white p-6 rounded-lg shadow-lg">
-          <h2 className="text-xl font-bold text-blue-600 mb-2">📊 Result Summary</h2>
+          <h2 className="text-xl font-bold text-blue-600 mb-2">
+            📊 Result Summary
+          </h2>
           <p>Total Questions: {totalQuestions}</p>
           <p>Correct Answers: ✅ {correctAnswers}</p>
           <p>Wrong Answers: ❌ {wrongAnswers}</p>
