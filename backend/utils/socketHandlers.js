@@ -1,4 +1,4 @@
-const ForumMessage = require('../models/ForumMessage');
+const ForumMessage = require('../models/Message');
 
 function socketHandler(io) {
   io.on('connection', (socket) => {

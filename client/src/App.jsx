@@ -8,7 +8,7 @@ import MockTests from "./pages/MockTests";
 import SubjectChapters from "./pages/SubjectChapters";
 import ChapterQuestions from "./pages/ChapterQuestions";
 import ProgressPage from "./pages/ProgressPage";
-import CommunityForum from "./pages/CommunityForum";
+import CommunityForum from "./pages/Forum";
 import AccountSettings from "./pages/AccountSettings";
 import SignOut from "./pages/SignOut";
 import PrivateRoute from "./pages/PrivateRoute";

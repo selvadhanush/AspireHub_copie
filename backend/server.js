@@ -16,30 +16,29 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// REST APIs
 app.use('/api/auth', authRoutes);
 app.use('/api/study-materials', studyRoutes);
 app.use('/api/mock-tests', mockTestRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/forum', forumRoutes);
 
-
 app.get('/', (req, res) => {
-    res.send('AspireHub Backend Running');
+  res.send('AspireHub Backend Running');
 });
 
-// Create HTTP server and bind Socket.IO
+// HTTP + WebSocket server
 const server = http.createServer(app);
-setupSocket(server);     
+setupSocket(server);
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI)
-.then(() => {
+  .then(() => {
     console.log('MongoDB connected');
-    server.listen(PORT, () => {  
-        console.log(`Server running on port ${PORT}`);
-    });
-})
-.catch((err) => console.log('MongoDB connection error:', err));
-console.log("🧪 JWT_SECRET in process.env:", process.env.JWT_SECRET);
+    server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+  })
+  .catch((err) => console.log('MongoDB connection error:', err));
+
+console.log("🧪 JWT_SECRET:", process.env.JWT_SECRET);
