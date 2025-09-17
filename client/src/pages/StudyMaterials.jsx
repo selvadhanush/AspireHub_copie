@@ -52,12 +52,12 @@ export default function StudyMaterials() {
           },
         });
         showToast('Material updated!');
-        console.log("⬆️ Token being sent:", token);
+        // console.log("⬆️ Token being sent:", token);
 
       } else {
         // POST request to add new material
-        console.log("📦 Sending token:", token); // <== Add this
-console.log("📦 Sending data:", newMaterial); // <== Add this
+//         console.log("📦 Sending token:", token); // <== Add this
+// console.log("📦 Sending data:", newMaterial); // <== Add this
 
         await axios.post('http://localhost:8000/api/study-materials', newMaterial, {
           headers: {
